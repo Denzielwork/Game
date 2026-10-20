@@ -1,0 +1,12 @@
+# One-click deploy on Render (https://render.com): New > Blueprint > pick this repo.
+services:
+  - type: web
+    name: coin-scramble
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: TRUST_PROXY   # Render puts one reverse proxy in front of the app
+        value: "1"

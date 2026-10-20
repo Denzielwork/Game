@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2b2140">
+  <meta name="description" content="Coin Scramble: a real-time party game to play with friends. Share a room code and grab coins together.">
+  <title>Coin Scramble</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- ============ Landing ============ -->
+<main id="landing" class="screen">
+  <div class="landing-wrap">
+    <header class="logo">
+      <img src="/favicon.svg" alt="" class="logo-coin" width="64" height="64">
+      <h1>Coin Scramble</h1>
+      <p class="tagline">A real-time party game for you and your friends.</p>
+    </header>
+
+    <section class="card" aria-labelledby="who-h">
+      <h2 id="who-h">1. What should we call you?</h2>
+      <input id="name" type="text" maxlength="16" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Your name" aria-label="Your name">
+
+      <h2 id="pick-h">2. Pick your character</h2>
+      <div id="avatar-grid" class="avatar-grid" role="radiogroup" aria-labelledby="pick-h"></div>
+    </section>
+
+    <section class="card actions" aria-labelledby="go-h">
+      <h2 id="go-h">3. Jump in</h2>
+      <div class="action-row">
+        <div class="action-col">
+          <button id="btn-create" class="btn btn-primary" type="button">Create a room</button>
+          <p class="hint">Get a code to share with friends.</p>
+        </div>
+        <div class="or" aria-hidden="true">or</div>
+        <div class="action-col">
+          <div class="join-row">
+            <input id="code" type="text" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ROOM CODE" aria-label="Room code" class="code-input">
+            <button id="btn-join" class="btn btn-secondary" type="button">Join</button>
+          </div>
+          <p class="hint">Got a code from a friend? Enter it here.</p>
+        </div>
+      </div>
+      <p id="landing-error" class="error" role="alert" aria-live="assertive"></p>
+    </section>
+
+    <section class="how" aria-label="How to play">
+      <div class="how-item"><span class="how-icon" aria-hidden="true">🪙</span><b>Grab coins</b><span>Run around the meadow. Shiny gems are worth 5!</span></div>
+      <div class="how-item"><span class="how-icon" aria-hidden="true">💨</span><b>Dash to steal</b><span>Smash into a rival to knock coins out of their pockets.</span></div>
+      <div class="how-item"><span class="how-icon" aria-hidden="true">🏆</span><b>Win the round</b><span>Most coins after 90 seconds takes the crown.</span></div>
+    </section>
+  </div>
+</main>
+
+<!-- ============ Game ============ -->
+<div id="game" class="screen hidden">
+  <canvas id="stage" aria-label="Game arena"></canvas>
+
+  <div id="hud" class="hud">
+    <button id="room-chip" class="chip chip-btn" type="button" title="Copy invite link">
+      <span class="chip-label">Room</span><span id="room-code" class="chip-code">------</span><span class="chip-icon" aria-hidden="true">⧉</span>
+    </button>
+    <div id="timer" class="timer" role="timer" aria-live="off">Lobby</div>
+    <div class="hud-right">
+      <span id="ping" class="chip ping" title="Connection latency">– ms</span>
+      <button id="btn-sound" class="chip chip-btn icon-btn" type="button" aria-label="Toggle sound" aria-pressed="false">🔊</button>
+      <button id="btn-leave" class="chip chip-btn icon-btn" type="button" aria-label="Leave room">✕</button>
+    </div>
+  </div>
+
+  <ol id="board" class="board hidden" aria-label="Scoreboard"></ol>
+
+  <section id="lobby" class="panel lobby hidden" aria-label="Waiting room">
+    <h2>Waiting room</h2>
+    <p class="lobby-code-label">Share this code with your friends</p>
+    <button id="lobby-code" class="big-code" type="button" aria-label="Copy invite link"></button>
+    <p id="copy-note" class="hint" aria-live="polite">Tap the code to copy an invite link</p>
+    <ul id="roster" class="roster"></ul>
+    <button id="btn-start" class="btn btn-primary hidden" type="button">Start game</button>
+    <p id="lobby-note" class="hint"></p>
+    <p class="hint keys"><b>Move</b> WASD / arrows &nbsp;·&nbsp; <b>Dash</b> Space &nbsp;·&nbsp; <b>Emotes</b> 1–6</p>
+  </section>
+
+  <div id="countdown" class="countdown hidden" aria-live="assertive"></div>
+
+  <section id="results" class="panel results hidden" aria-label="Round results">
+    <h2 id="results-title">Results</h2>
+    <ol id="results-list" class="results-list"></ol>
+    <button id="btn-again" class="btn btn-primary hidden" type="button">Play again</button>
+    <p id="results-note" class="hint"></p>
+  </section>
+
+  <div id="emotes" class="emotes" aria-label="Emotes"></div>
+
+  <div id="touch" class="touch">
+    <div id="stick" class="stick" aria-label="Move joystick"><div id="knob" class="knob"></div></div>
+    <button id="btn-dash" class="dash-btn" type="button" aria-label="Dash">DASH</button>
+  </div>
+
+  <div id="banner" class="banner hidden" role="status" aria-live="polite"></div>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</div>
+
+<script src="/js/sim.js"></script>
+<script src="/js/avatars.js"></script>
+<script src="/js/audio.js"></script>
+<script src="/js/game.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
